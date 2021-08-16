@@ -123,3 +123,13 @@ map<string, vector<double>> GetTwissTableAsMap(string filename) {
   file.close();
   return out;
 }
+
+void printTwissHeader(map<string, double> &twheader) {
+  std::printf("\n");
+  std::printf("%-30s\n", "Twiss Header");
+  std::printf("%-30s\n", "============");
+  for (auto const &pair : twheader) {
+    std::printf("%-30s %16.8e\n", pair.first.c_str(), pair.second);
+  }
+  std::printf("\n");
+}

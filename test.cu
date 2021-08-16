@@ -12,6 +12,7 @@ int main(){
     std::map<std::string,std::vector<double>> inputMapVector;
 
     std::string file = "testinput.in";
+    std::string twfile = "b2_design_lattice_1996.twiss";
 
 
     READINPUT::ReadInputFile(file, inputMapBool, inputMapInt, inputMapDouble, inputMapString, inputMapVector);
@@ -21,5 +22,9 @@ int main(){
     READINPUT::PrintInputIntMap(inputMapInt);
     READINPUT::PrintInputDoubleMap(inputMapDouble);
     READINPUT::PrintInputVectorMap(inputMapVector);
+
+
+    std::map<std::string, double> twheader = GetTwissHeader(twfile);
+    printTwissHeader(twheader);
     return 0;
 }

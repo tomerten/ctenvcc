@@ -29,4 +29,5 @@ map<string, double> GetTwissHeader(string filename);
  */
 map<string, vector<double>> GetTwissTableAsMap(string filename);
 
+void printTwissHeader(map<string, double> &twheader); 
 #endif
