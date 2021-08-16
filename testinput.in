@@ -1,7 +1,6 @@
-atomNumber  5.44617021e-04
-charge  -1
+atomNumber1  5.44617021e-04
+charge1  -1
 nMacro  1000
-nReal  1.e10
 nBins  100
 seed  123456
 TimeRatio  100.0
@@ -11,4 +10,6 @@ IBSmodel  1
 nTurns 100
 nWrite 10
 HarmonicNumbers 400 1500
-
+Voltages -1.5e6 0.0
+TwissFileNameBeam1 b2_design_lattice_1996.twiss
+BunchFileNameBeam1 BunchFileBeam1.in

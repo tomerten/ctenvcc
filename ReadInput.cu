@@ -84,11 +84,55 @@ void ReadInputFile(std::string FileName,
             //iss >> valueDouble;
             inputMapVector[key].push_back(valueDouble);
             }
-        }   
+        }  
+        
+        // add to string map if key in string keys (see header)
+        it = find(stringKeys.begin(), stringKeys.end(), key);
+        if (it != stringKeys.end()){
+            iss >> valueString;
+            inputMapString[key] = valueString;
+
+        }
     }
 }
 }
 
+void readBunchFile(std::string filename, std::map<int, std::vector<double>> &bunchMap){
+    // file reading vars
+    std::string line;
+    std::ifstream inputfile;
+    int bucket;
+    double realnumberparticles;
+	double emitx;
+	double emity;
+	double sigs;
+
+    // open file stream
+	try {
+		inputfile.open(filename.c_str());
+	}
+	catch(std::exception const& e) {
+		std::cout << filename << ": " << e.what() << "\n";
+	};
+
+    // start of reading file
+    if (inputfile.is_open()){
+        // read header line and skip it (only there for user readability)
+        std::getline(inputfile, line);
+        while(std::getline(inputfile, line)){
+            std::stringstream iss(line);
+            if ( iss >> bucket >> realnumberparticles >> emitx >> emity >> sigs ){
+                std::vector<double> bunchRow;
+                bunchRow.push_back(realnumberparticles);
+                bunchRow.push_back(emitx);
+                bunchRow.push_back(emity);
+                bunchRow.push_back(sigs);
+                bunchMap[bucket]=bunchRow;
+            }
+        }
+    }
+    inputfile.close();
+}
 
 void PrintInputBoolMap(std::map<std::string, bool> inputMapBool){
     for(std::map<std::string, bool>::iterator it=inputMapBool.begin();it!=inputMapBool.end();it++){
@@ -102,12 +146,16 @@ void PrintInputIntMap(std::map<std::string, int> inputMapInt){
     }
 }
 
+void PrintInputStringMap(std::map<std::string, std::string> inputMapString){
+    for(std::map<std::string, std::string>::iterator it=inputMapString.begin();it!=inputMapString.end();it++){
+        std::printf("%-30s %s\n", it->first.c_str(), it->second.c_str());
+    }
+}
 void PrintInputDoubleMap(std::map<std::string, double> inputMapDouble){
     for(std::map<std::string, double>::iterator it=inputMapDouble.begin();it!=inputMapDouble.end();it++){
         std::printf("%-30s %12.8e\n", it->first.c_str(), it->second);
     }
 }
-
 void PrintInputVectorMap(std::map<std::string, std::vector<double>> inputMapVector){
     for(std::map<std::string, std::vector<double>>::iterator it=inputMapVector.begin();
     it!=inputMapVector.end();it++){
@@ -117,4 +165,18 @@ void PrintInputVectorMap(std::map<std::string, std::vector<double>> inputMapVect
     }
 }
 
+void PrintInputBunch(std::map<int, std::vector<double>> bunchMap){
+    std::cout << std::setw(8) << std::left << "Bucket";
+    std::cout << std::setw(12) << std::right << "nReal";
+    std::cout << std::setw(15) << std::right << "ex";
+    std::cout << std::setw(15) << "ey";
+    std::cout << std::setw(15) << "sigs[m]" << std::endl;
+    for(std::map<int, std::vector<double>>::iterator it=bunchMap.begin();
+    it!=bunchMap.end();it++){
+
+        std::cout << std::setw(8) << std::left << it->first;
+        std::cout << it->second;
+        std::cout << std::endl;
+    }
+}
 }
