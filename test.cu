@@ -80,8 +80,13 @@ int main(){
     COMMON::setRadParam(twheader, b1Param);
     READINPUT::PrintInputDoubleMap(b1Param);
 
-    thrust::host_vector<double> test = DISTRIBUTIONS::BiGaussian4D(b1Param,bmap1[0], 123456);
-    thrust::copy(test.begin(),test.end(), std::ostream_iterator<double>(std::cout, "\t"));
+    std::vector<std::vector<double>> dist = 
+    DISTRIBUTIONS::GenerateDistributionMatched(b1Param,inputMapVector,inputMapInt, twheader, bmap1[0] ); 
+
+    //thrust::host_vector<double> test = 
+    //    DISTRIBUTIONS::BiGaussian6DLongMatched(b1Param,inputMapVector,twheader, bmap1[0],123456);
+    //std::copy(dist.begin(),dist.end(), std::ostream_iterator<double>(std::cout, "\t"));
+    std::cout << dist;
     std::cout<<std::endl;
     return 0;
 }
