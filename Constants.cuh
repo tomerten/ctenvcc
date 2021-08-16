@@ -26,5 +26,10 @@ const double euler = 0.577215664901533;
 const double erad = 2.8179403262e-15;
 /// Classical proton radius [m]
 const double prad = erad * emass / pmass;
+
+const double electron_volt_joule_relationship = 1.602176634e-19;
+
+const double hbarsu = 1.0545718176461565e-34;
+
 }
 #endif

@@ -9,6 +9,8 @@
 #include "Radiation.cu"
 #include "Output.cuh"
 #include "Output.cu"
+#include "Distributions.cuh"
+#include "Distributions.cu"
 
 int main(){
 	
@@ -64,6 +66,7 @@ int main(){
     std::map<std::string, double> b1Param;
     b1Param["aatom"] = inputMapDouble["atomNumber1"];
     b1Param["charge"] = inputMapDouble["charge1"];
+    b1Param["timeratio"] = (double)inputMapInt["TimeRatio"];
     COMMON::setBasic(twheader, b1Param);
     // READINPUT::PrintInputDoubleMap(b1Param);
 
@@ -74,5 +77,11 @@ int main(){
     //OUTPUT::PrintIntVectorMap(bmap1);
     READINPUT::PrintInputBunch(bmap1);
 
+    COMMON::setRadParam(twheader, b1Param);
+    READINPUT::PrintInputDoubleMap(b1Param);
+
+    thrust::host_vector<double> test = DISTRIBUTIONS::BiGaussian4D(b1Param,bmap1[0], 123456);
+    thrust::copy(test.begin(),test.end(), std::ostream_iterator<double>(std::cout, "\t"));
+    std::cout<<std::endl;
     return 0;
 }

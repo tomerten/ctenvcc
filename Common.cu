@@ -1,4 +1,5 @@
 #include "Numeric.cuh"
+#include "Radiation.cuh"
 //#include "Numeric.cu"
 #include "Constants.cuh"
 
@@ -50,6 +51,8 @@ namespace COMMON {
                 double phis     = NUMERIC::SynchronuousPhase( 0.0, search, U0, charge, v, h, eps  );
                 double phisNext = NUMERIC::SynchronuousPhase( 0.0, search + CONSTANTS::pi, U0, charge, v, h, eps  );
                 double qs       = NUMERIC::SynchrotronTune( phis, twheader, paramMap, v, h);
+                // need to add it to general param for radiation calc too
+                paramMap["qs"]  = qs;
                 double tauhat   = fabs( phisNext - phis ) / ( h0 * omega );
                 double sigs     = p.second[3];
                 double sige     = NUMERIC::sigefromsigs( omega, sigs, qs, gamma, gammatr ) ;
@@ -62,9 +65,14 @@ namespace COMMON {
                 p.second.push_back(sige);
                 p.second.push_back(dpop);
             }
-    );
-        
-    
+        );
+    }
 
+    void setRadParam(
+        std::map<std::string, double> &twheader,
+        std::map<std::string, double> &paramMap
+    ){
+        RADIATION::RadEquilib(twheader, paramMap);
+        RADIATION::RadDecayExcitationCoeff(twheader, paramMap);
     }
 }

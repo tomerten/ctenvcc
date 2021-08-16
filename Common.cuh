@@ -10,6 +10,11 @@ namespace COMMON {
         std::map<std::string, std::vector<double>> &inputMapVector,
         std::map<int, std::vector<double>> &bunchMap
     );
+
+    void setRadParam(
+        std::map<std::string, double> &twheader,
+        std::map<std::string, double> &paramMap
+    );
 }
 
 #endif
