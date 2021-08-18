@@ -75,4 +75,6 @@ namespace COMMON {
         RADIATION::RadEquilib(twheader, paramMap);
         RADIATION::RadDecayExcitationCoeff(twheader, paramMap);
     }
+
+    //void getEmittance(std::map<int, std::vector<std::vector<double>>> &emit)
 }
